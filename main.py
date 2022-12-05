@@ -9,15 +9,21 @@ def get_config():
 
     new_puzzle = subparser.add_parser("new")
     new_puzzle.add_argument("day", type=int)
+    new_puzzle.add_argument("--no-fetch", action="store_true")
+    new_puzzle.add_argument("-r", "--recreate", action="store_true")
 
     run_solution = subparser.add_parser("run")
     run_solution.add_argument("day", type=int)
-    run_solution.add_argument("-t", "--test", type=bool, default=False)
+    run_solution.add_argument("-t", "--test", action="store_true")
+    run_solution.add_argument("-p", "--part", type=int, default=0, choices=[0, 1, 2])
 
     return parser.parse_args()
 
 
-def add_new_puzzle(day):
+def add_new_puzzle(day, no_fetch, recreate):
+    if not os.path.exists("days"):
+        os.mkdir("days")
+
     day_directory = "days/d" + f"0{day}" if day < 10 else f"{day}"
 
     if not os.path.exists(day_directory):
@@ -26,16 +32,33 @@ def add_new_puzzle(day):
     with open("templates/__init__.py", "r") as f:
         puzzle_codes = f.read()
 
-    with open(os.path.join(day_directory, "__init__.py"), "w") as f:
-        f.write(puzzle_codes)
+    puzzle_path = os.path.join(day_directory, "__init__.py")
+    if not os.path.exists(puzzle_path) or recreate:
+        with open(puzzle_path, "w") as f:
+            f.write(puzzle_codes)
+
+    else:
+        print(f"File {puzzle_path} already exists.")
+        return
+
+    if not no_fetch:
+        with open(".cookie") as f:
+            cookie = f.read()
+
+        import requests
+
+        test_case = requests.get(
+            "https://adventofcode.com/2022/day/3/input", headers={"Cookie": cookie}
+        ).text
 
     input_txt = os.path.join(day_directory, "input.txt")
-    if not os.path.exists(input_txt):
+    if not os.path.exists(input_txt) or recreate:
         with open(os.path.join(day_directory, "input.txt"), "w") as f:
-            f.write("")
+            if not no_fetch:
+                f.write(test_case)
 
     test_txt = os.path.join(day_directory, "test.txt")
-    if not os.path.exists(test_txt):
+    if not os.path.exists(test_txt) or recreate:
         with open(os.path.join(day_directory, "test.txt"), "w") as f:
             f.write("")
 
@@ -61,9 +84,9 @@ def main():
     config = get_config()
 
     if config.subcommand == "new":
-        add_new_puzzle(config.day)
+        add_new_puzzle(config.day, config.no_fetch, config.recreate)
     elif config.subcommand == "run":
-        run_puzzle_code(config.day, config.test)
+        run_puzzle_code(config.day, config.test, config.part)
 
 
 if __name__ == "__main__":
