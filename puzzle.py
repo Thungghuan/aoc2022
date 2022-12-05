@@ -2,6 +2,8 @@ import os
 
 
 class BasePuzzle:
+    lines = []
+
     def __init__(self) -> None:
         pass
 
