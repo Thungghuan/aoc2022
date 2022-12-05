@@ -48,7 +48,7 @@ def add_new_puzzle(day, no_fetch, recreate):
         import requests
 
         test_case = requests.get(
-            "https://adventofcode.com/2022/day/3/input", headers={"Cookie": cookie}
+            f"https://adventofcode.com/2022/day/{day}/input", headers={"Cookie": cookie}
         ).text
 
     input_txt = os.path.join(day_directory, "input.txt")
