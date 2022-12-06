@@ -70,9 +70,11 @@ def run_puzzle_code(day, test, part=0):
 
     puzzle = importlib.import_module(f"days.{format_day}").Puzzle()
     puzzle.get_test_cases(os.path.join(day_directory, test_cases))
+    puzzle.__init_part__()
 
     if part == 0:
         puzzle.part1()
+        puzzle.__init_part__()
         puzzle.part2()
     elif part == 1:
         puzzle.part1()
