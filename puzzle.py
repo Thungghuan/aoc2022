@@ -7,6 +7,9 @@ class BasePuzzle:
     def __init__(self) -> None:
         pass
 
+    def __init_puzzle__(self) -> None:
+        pass
+
     def __init_part__(self) -> None:
         pass
 
