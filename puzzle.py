@@ -22,7 +22,7 @@ class BasePuzzle:
     def get_test_cases(self, filename):
         f = open(filename)
 
-        self.raw = f.read()
+        self.raw = f.read().strip()
         self.lines = self.raw.split("\n")
 
         f.close()
