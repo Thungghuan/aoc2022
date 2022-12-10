@@ -24,7 +24,7 @@ def add_new_puzzle(day, no_fetch, recreate):
     if not os.path.exists("days"):
         os.mkdir("days")
 
-    day_directory = "days/d" + f"0{day}" if day < 10 else f"{day}"
+    day_directory = "days/d" + (f"0{day}" if day < 10 else f"{day}")
 
     if not os.path.exists(day_directory):
         os.mkdir(day_directory)
