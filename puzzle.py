@@ -4,6 +4,7 @@ import os
 class BasePuzzle:
     lines = []
     mode = "normal"
+    part = 1
 
     def __init__(self) -> None:
         pass
@@ -16,6 +17,9 @@ class BasePuzzle:
 
     def set_mode(self, mode):
         self.mode = "test"
+
+    def set_part(self, part):
+        self.part = part
 
     def part1(self):
         pass

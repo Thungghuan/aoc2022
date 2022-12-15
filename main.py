@@ -74,15 +74,19 @@ def run_puzzle_code(day, test, part=0):
     puzzle.__init_part__()
 
     if test:
-        puzzle.set_mode('test')
+        puzzle.set_mode("test")
 
     if part == 0:
+        puzzle.set_part(1)
         puzzle.part1()
         puzzle.__init_part__()
+        puzzle.set_part(2)
         puzzle.part2()
     elif part == 1:
+        puzzle.set_part(1)
         puzzle.part1()
     elif part == 2:
+        puzzle.set_part(2)
         puzzle.part2()
 
 
