@@ -73,6 +73,9 @@ def run_puzzle_code(day, test, part=0):
     puzzle.__init_puzzle__()
     puzzle.__init_part__()
 
+    if test:
+        puzzle.set_mode('test')
+
     if part == 0:
         puzzle.part1()
         puzzle.__init_part__()
